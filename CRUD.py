@@ -172,7 +172,7 @@ botonActualizar.grid(row=1, column=2, sticky="e", padx=10, pady=10)
 botonBorrar = Button(miFrame2, text="Borrar", command=borrar)
 botonBorrar.grid(row=1, column=3, sticky="e", padx=10, pady=10)
 
-
+#end
 
 
 
