@@ -80,6 +80,22 @@ comentarioLabel.grid(row=5, column=0, sticky="e", padx=10, pady=10)
 
 # Botones
 
+miFrame2 = Frame(root)
+miFrame2.pack()
+
+botonCrear = Button(miFrame2, text="Crear")
+botonCrear.grid(row=1, column=0, sticky="e", padx=10, pady=10)
+
+botonLeer = Button(miFrame2, text="Leer")
+botonLeer.grid(row=1, column=1, sticky="e", padx=10, pady=10)
+
+botonActualizar = Button(miFrame2, text="Actualizar")
+botonActualizar.grid(row=1, column=2, sticky="e", padx=10, pady=10)
+
+botonBorrar = Button(miFrame2, text="Borrar")
+botonBorrar.grid(row=1, column=3, sticky="e", padx=10, pady=10)
+
+
 
 
 
