@@ -26,6 +26,22 @@ def salirAplicacion():
     if valor == "yes":
         root.destroy()
 
+def limpiaCampos():
+    miId.set("")
+    miNombre.set("")
+    miPass.set("")
+    miApellido.set("")
+    miDireccion.set("")
+    textoComentario.delete(1.0, END)
+
+def crear():
+    miConexion = sqlite3.connect("Usuarios")
+    miCursor = miConexion.cursor()
+    datos = miNombre.get(), miPass.get(), miApellido.get(), miDireccion.get(), textoComentario.get("1.0", END)
+    miCursor.execute("INSERT INTO DATOSUSUARIOS VALUES(NULL, ?, ?, ?, ?, ?)", datos)
+    miConexion.commit()
+    messagebox.showinfo("BBDD", "Registro insertado con éxito")
+
 root = Tk()
 barraMenu = Menu(root)
 root.config(menu=barraMenu, width=300, height=300)
@@ -36,11 +52,11 @@ bbddMenu.add_command(label="Salir", command=salirAplicacion)
 barraMenu.add_cascade(label="BBDD", menu=bbddMenu)
 
 borrarMenu = Menu(barraMenu, tearoff=0)
-borrarMenu.add_command(label="Borrar campos")
+borrarMenu.add_command(label="Borrar campos", command=limpiaCampos)
 barraMenu.add_cascade(label="Borrar", menu=borrarMenu)
 
 crudMenu = Menu(barraMenu, tearoff=0)
-crudMenu.add_command(label="Crear")
+crudMenu.add_command(label="Crear", command=crear)
 crudMenu.add_command(label="Leer")
 crudMenu.add_command(label="Actualizar")
 crudMenu.add_command(label="Borrar")
@@ -56,23 +72,29 @@ barraMenu.add_cascade(label="Ayuda", menu=ayudaMenu)
 miFrame = Frame(root)
 miFrame.pack()
 
-cuadroID = Entry(miFrame)
+miId = StringVar()
+miNombre = StringVar()
+miPass = StringVar()
+miApellido = StringVar()
+miDireccion = StringVar()
+
+cuadroID = Entry(miFrame, textvariable=miId)
 cuadroID.grid(row=0, column=1, padx=10, pady=10)
 cuadroID.config(fg="red", justify="center")
 
-cuadroNombre = Entry(miFrame)
+cuadroNombre = Entry(miFrame, textvariable=miNombre)
 cuadroNombre.grid(row=1, column=1, padx=10, pady=10)
 cuadroNombre.config(fg="red", justify="center")
 
-cuadroPass = Entry(miFrame)
+cuadroPass = Entry(miFrame, textvariable=miPass)
 cuadroPass.grid(row=2, column=1, padx=10, pady=10)
 cuadroPass.config(show="*")
 
-cuadroApellido = Entry(miFrame)
+cuadroApellido = Entry(miFrame, textvariable=miApellido)
 cuadroApellido.grid(row=3, column=1, padx=10, pady=10)
 cuadroApellido.config(fg="red", justify="center")
 
-cuadroDireccion = Entry(miFrame)
+cuadroDireccion = Entry(miFrame, textvariable=miDireccion)
 cuadroDireccion.grid(row=4, column=1, padx=10, pady=10)
 cuadroDireccion.config(fg="red", justify="center")
 
@@ -107,7 +129,7 @@ comentarioLabel.grid(row=5, column=0, sticky="e", padx=10, pady=10)
 miFrame2 = Frame(root)
 miFrame2.pack()
 
-botonCrear = Button(miFrame2, text="Crear")
+botonCrear = Button(miFrame2, text="Crear", command=crear)
 botonCrear.grid(row=1, column=0, sticky="e", padx=10, pady=10)
 
 botonLeer = Button(miFrame2, text="Leer")
